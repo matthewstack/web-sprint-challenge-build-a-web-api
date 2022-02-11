@@ -14,12 +14,11 @@ router.get("/", async (req, res, next) => {
     const theProjects = await Projects.get();
     res.json(theProjects);
   } catch (err) {
-    res.status(500).json({
-      message: "An error has happened",
-    });
+    next(err);
   }
 });
 
+// validateProject middleware does heave lifting for this get request
 router.get("/:id", validateProject, (req, res, next) => {
   res.json(req.project);
 });
@@ -34,6 +33,7 @@ router.post("/", validateProjectPayload, (req, res, next) => {
     });
 });
 
+// validating the payload first before making the validateProject request
 router.put(
   "/:id",
   validateProjectPayload,

@@ -24,6 +24,7 @@ async function validateProject(req, res, next) {
 function validateProjectPayload(req, res, next) {
   const { name, description, completed } = req.body;
 
+  //   can't use !completed because the field would be blank, not false
   if (name && description && (completed === false || completed === true)) {
     next();
   } else {
